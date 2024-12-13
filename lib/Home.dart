@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
           ),
           Padding(
             padding: EdgeInsets.only(left: 33.w, right: 33.w, top: 73),
-            child: GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (_)=>SellCar()));},
+            child: GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (_)=>Rent()));},
               child: Container(
                   width: 364,
                   height: 94,
