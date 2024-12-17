@@ -1,5 +1,5 @@
 import 'package:drive_to_go/rent%20car.dart';
-import 'package:drive_to_go/sell%20car.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
