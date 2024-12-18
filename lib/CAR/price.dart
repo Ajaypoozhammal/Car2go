@@ -1,6 +1,5 @@
-import 'package:drive_to_go/Media.dart';
-import 'package:drive_to_go/Options.dart';
-import 'package:drive_to_go/rent%20car.dart';
+import 'package:drive_to_go/CAR/Media.dart';
+import 'package:drive_to_go/CAR/rent%20car.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
