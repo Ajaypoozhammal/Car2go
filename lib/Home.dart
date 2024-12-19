@@ -1,5 +1,5 @@
-import 'package:drive_to_go/rent%20car.dart';
-
+import 'package:drive_to_go/RentCAR/rent%20car.dart';
+import 'package:drive_to_go/Sell%20Car/Sell%20Car.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
           ),
           Padding(
             padding: EdgeInsets.only(left: 33.w, right: 33.w, top: 73),
-            child: GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (_)=>Rent()));},
+            child: GestureDetector(onTap: (){Navigator.push(context, MaterialPageRoute(builder: (_)=>Sell()));},
               child: Container(
                   width: 364,
                   height: 94,

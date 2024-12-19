@@ -1,5 +1,5 @@
 import 'package:drive_to_go/Home.dart';
-import 'package:drive_to_go/price.dart';
+import 'package:drive_to_go/RentCAR/price.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -289,108 +289,154 @@ class _RentState extends State<Rent> {
                                   ),
                                 ),
                               ),
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              elevation: 10,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              builder: (BuildContext context) {
-                                return StatefulBuilder(
-                                  builder: (BuildContext context, void Function(void Function()) setState) {
-                                    return SizedBox(
-                                      height: 640.h,
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 41.w),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(height: 44.h),
-                                            Text(
-                                              'Brands',
-                                              style: GoogleFonts.inter(
-                                                color: Color(0xFF000B17),
-                                                fontSize: 20.sp,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                            ),
-                                            SizedBox(height: 26.h),
-                                            TextField(
-                                              controller: brandController,
-                                              style: TextStyle(color: Colors.black),
-                                              decoration: InputDecoration(
-                                                contentPadding: EdgeInsets.symmetric(vertical: 10.h),
-                                                border: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(5.r),
-                                                ),
-                                                enabledBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(5.r),
-                                                  borderSide: BorderSide(color: Color(0xFF000B17)),
-                                                ),
-                                                focusedBorder: OutlineInputBorder(
-                                                  borderRadius: BorderRadius.circular(5.r),
-                                                  borderSide: BorderSide(color: Color(0xFF000B17)),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: BorderSide(color: Colors.red),
-                                                  borderRadius: BorderRadius.circular(5.r),
-                                                ),
-                                                prefixIcon: Icon(Icons.search),
-                                                hintText: 'Search brand here',
-                                                hintStyle: GoogleFonts.inter(
-                                                  color: Color(0xFF000B17),
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: ListView.builder(
-                                                itemCount: brandOption.length,
-                                                itemBuilder: (BuildContext context, int index) {
-                                                  final option = brandOption[index];
-                                                  return RadioListTile<String>(
-                                                    value: option['value'],
-                                                    groupValue: selectedBrand, // Sync the groupValue with the updated selectedBrand
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                        selectedBrand = value ?? '';
-                                                        brandController.text = selectedBrand;
-                                                      });
-                                                      Navigator.of(context).pop(); // Close the modal after selection
-                                                    },
-                                                    title: Text(
-                                                      option['value'],
-                                                      style: GoogleFonts.lato(
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w400,
-                                                        color: Colors.black87,
+                              GestureDetector(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    elevation: 10,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(
+                                        builder: (BuildContext context,
+                                            void Function(void Function())
+                                                setState) {
+                                          return SizedBox(
+                                            height: 640.h,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 41.w),
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(height: 44.h),
+                                                  Text(
+                                                    'Brands',
+                                                    style: GoogleFonts.inter(
+                                                      color: Color(0xFF000B17),
+                                                      fontSize: 20.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
+                                                  ),
+                                                  SizedBox(height: 26.h),
+                                                  TextField(
+                                                    controller: brandController,
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                    decoration: InputDecoration(
+                                                      contentPadding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 10.h),
+                                                      border:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.r),
+                                                      ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.r),
+                                                        borderSide: BorderSide(
+                                                            color: Color(
+                                                                0xFF000B17)),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.r),
+                                                        borderSide: BorderSide(
+                                                            color: Color(
+                                                                0xFF000B17)),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.r),
+                                                      ),
+                                                      prefixIcon:
+                                                          Icon(Icons.search),
+                                                      hintText:
+                                                          'Search brand here',
+                                                      hintStyle:
+                                                          GoogleFonts.inter(
+                                                        color:
+                                                            Color(0xFF000B17),
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
                                                       ),
                                                     ),
-                                                    secondary: Icon(
-                                                      option['icon'],
-                                                      color: Colors.black,
-                                                      size: 30,
+                                                  ),
+                                                  Expanded(
+                                                    child: ListView.builder(
+                                                      itemCount:
+                                                          brandOption.length,
+                                                      itemBuilder:
+                                                          (BuildContext context,
+                                                              int index) {
+                                                        final option =
+                                                            brandOption[index];
+                                                        return RadioListTile<
+                                                            String>(
+                                                          value:
+                                                              option['value'],
+                                                          groupValue:
+                                                              selectedBrand,
+                                                          // Sync the groupValue with the updated selectedBrand
+                                                          onChanged: (value) {
+                                                            setState(() {
+                                                              selectedBrand =
+                                                                  value ?? '';
+                                                              brandController
+                                                                      .text =
+                                                                  selectedBrand;
+                                                            });
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop(); // Close the modal after selection
+                                                          },
+                                                          title: Text(
+                                                            option['value'],
+                                                            style: GoogleFonts
+                                                                .lato(
+                                                              fontSize: 18,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: Colors
+                                                                  .black87,
+                                                            ),
+                                                          ),
+                                                          secondary: Icon(
+                                                            option['icon'],
+                                                            color: Colors.black,
+                                                            size: 30,
+                                                          ),
+                                                          activeColor:
+                                                              Colors.black,
+                                                        );
+                                                      },
                                                     ),
-                                                    activeColor: Colors.black,
-                                                  );
-                                                },
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          child: Icon(Icons.keyboard_arrow_down_outlined),
-                        )
-
-                        ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(Icons.keyboard_arrow_down_outlined),
+                              )
+                            ],
                           ),
                         ),
                       ),
@@ -447,226 +493,231 @@ class _RentState extends State<Rent> {
                                       borderRadius: BorderRadius.circular(10.0),
                                     ),
                                     builder: (BuildContext context) {
-                                      return StatefulBuilder(builder: (BuildContext context, void Function(void Function()) setState) {
-                                      return  SizedBox(
-                                          height: 640.h,
-                                          child: Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 41.w),
-                                            child: Column(
-                                              // mainAxisAlignment: MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  height: 44.h,
-                                                ),
-                                                Text(
-                                                  'Model',
-                                                  style: GoogleFonts.inter(
-                                                    color: Color(0xFF000B17),
-                                                    fontSize: 20.sp,
-                                                    fontWeight:
-                                                    FontWeight.w500,
+                                      return StatefulBuilder(
+                                        builder: (BuildContext context,
+                                            void Function(void Function())
+                                                setState) {
+                                          return SizedBox(
+                                            height: 640.h,
+                                            child: Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 41.w),
+                                              child: Column(
+                                                // mainAxisAlignment: MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 44.h,
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 26.h,
-                                                ),
-                                                TextField(
-                                                  controller: model,
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      decorationThickness:
-                                                      0.sp),
-                                                  decoration: InputDecoration(
-                                                    contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        vertical: 10.h),
-                                                    border:
-                                                    OutlineInputBorder(
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(5.r),
-                                                    ),
-                                                    enabledBorder: OutlineInputBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            5.r),
-                                                        borderSide: BorderSide(
-                                                            color: Color(
-                                                                0xFF000B17))),
-                                                    focusedBorder: OutlineInputBorder(
-                                                        borderRadius:
-                                                        BorderRadius
-                                                            .circular(
-                                                            5.r),
-                                                        borderSide: BorderSide(
-                                                            color: Color(
-                                                                0xFF000B17))),
-                                                    errorBorder:
-                                                    OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                          color: Colors.red),
-                                                      borderRadius:
-                                                      BorderRadius
-                                                          .circular(5.r),
-                                                    ),
-                                                    prefixIcon:
-                                                    Icon(Icons.search),
-                                                    hintText: 'Search here',
-                                                    hintStyle:
-                                                    GoogleFonts.inter(
-                                                      textStyle: TextStyle(
-                                                        color:
-                                                        Color(0xFF000B17),
-                                                        fontSize: 14.sp,
-                                                        fontFamily: 'Inter',
-                                                        fontWeight:
-                                                        FontWeight.w400,
-                                                      ),
+                                                  Text(
+                                                    'Model',
+                                                    style: GoogleFonts.inter(
+                                                      color: Color(0xFF000B17),
+                                                      fontSize: 20.sp,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  child: ListView.builder(
-                                                      itemCount: 1,
-                                                      itemBuilder:
-                                                          (BuildContext
-                                                      context,
-                                                          int index) {
-                                                        return Column(
-                                                          children:
-                                                          modelOption.map(
-                                                                  (option) {
-                                                                return RadioListTile<
-                                                                    String>(
-                                                                  value: option[
-                                                                  'value'],
-                                                                  groupValue:
-                                                                  selectedmodel,
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    setState(() {
-                                                                      selectedmodel =
-                                                                          value;
-                                                                      brandController.text !=
-                                                                          value;
-
-                                                                      // Close dropdown on selection
-                                                                    });
-                                                                  },
-                                                                  title: Text(
-                                                                    option[
-                                                                    'value'],
-                                                                    style:
-                                                                    GoogleFonts
-                                                                        .lato(
-                                                                      fontSize:
-                                                                      18,
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                      color: Colors
-                                                                          .black87,
-                                                                    ),
-                                                                  ),
-                                                                  secondary: Icon(
-                                                                    option[
-                                                                    'icon'],
-                                                                    color: Colors
-                                                                        .black,
-                                                                    size: 30,
-                                                                  ),
-                                                                  activeColor:
-                                                                  Colors
-                                                                      .black,
-                                                                );
-                                                              }).toList(),
-                                                        );
-                                                      }),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 29.h,
-                                                      left: 47.w,
-                                                      right: 36.w),
-                                                  child: Container(
-                                                    width: 347.w,
-                                                    height: 54.h,
-                                                    decoration:
-                                                    ShapeDecoration(
-                                                      shape:
-                                                      RoundedRectangleBorder(
-                                                        side: BorderSide(
-                                                            width: 1,
-                                                            color: Color(
-                                                                0xFFB5B1B1)),
+                                                  SizedBox(
+                                                    height: 26.h,
+                                                  ),
+                                                  TextField(
+                                                    controller: model,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        decorationThickness:
+                                                            0.sp),
+                                                    decoration: InputDecoration(
+                                                      contentPadding:
+                                                          EdgeInsets.symmetric(
+                                                              vertical: 10.h),
+                                                      border:
+                                                          OutlineInputBorder(
                                                         borderRadius:
-                                                        BorderRadius
-                                                            .circular(5),
+                                                            BorderRadius
+                                                                .circular(5.r),
                                                       ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Others',
-                                                        style:
-                                                        GoogleFonts.inter(
-                                                          color: Color(
-                                                              0xFFB5B1B1),
+                                                      enabledBorder: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.r),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF000B17))),
+                                                      focusedBorder: OutlineInputBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.r),
+                                                          borderSide: BorderSide(
+                                                              color: Color(
+                                                                  0xFF000B17))),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                            color: Colors.red),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.r),
+                                                      ),
+                                                      prefixIcon:
+                                                          Icon(Icons.search),
+                                                      hintText: 'Search here',
+                                                      hintStyle:
+                                                          GoogleFonts.inter(
+                                                        textStyle: TextStyle(
+                                                          color:
+                                                              Color(0xFF000B17),
                                                           fontSize: 14.sp,
+                                                          fontFamily: 'Inter',
                                                           fontWeight:
-                                                          FontWeight.w400,
+                                                              FontWeight.w400,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 27.h,
-                                                      bottom: 55.h,
-                                                      left: 47.w,
-                                                      right: 36.w),
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      Navigator.of(context)
-                                                          .pop();
-                                                    },
+                                                  Expanded(
+                                                    child: ListView.builder(
+                                                        itemCount: 1,
+                                                        itemBuilder:
+                                                            (BuildContext
+                                                                    context,
+                                                                int index) {
+                                                          return Column(
+                                                            children:
+                                                                modelOption.map(
+                                                                    (option) {
+                                                              return RadioListTile<
+                                                                  String>(
+                                                                value: option[
+                                                                    'value'],
+                                                                groupValue:
+                                                                    selectedmodel,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    selectedmodel =
+                                                                        value;
+                                                                    brandController
+                                                                            .text !=
+                                                                        value;
+
+                                                                    // Close dropdown on selection
+                                                                  });
+                                                                },
+                                                                title: Text(
+                                                                  option[
+                                                                      'value'],
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .lato(
+                                                                    fontSize:
+                                                                        18,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w400,
+                                                                    color: Colors
+                                                                        .black87,
+                                                                  ),
+                                                                ),
+                                                                secondary: Icon(
+                                                                  option[
+                                                                      'icon'],
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 30,
+                                                                ),
+                                                                activeColor:
+                                                                    Colors
+                                                                        .black,
+                                                              );
+                                                            }).toList(),
+                                                          );
+                                                        }),
+                                                  ),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 29.h,
+                                                        left: 47.w,
+                                                        right: 36.w),
                                                     child: Container(
-                                                      width: 340.w,
-                                                      height: 56.h,
+                                                      width: 347.w,
+                                                      height: 54.h,
                                                       decoration:
-                                                      ShapeDecoration(
-                                                        color:
-                                                        Color(0xFF000B17),
-                                                        shape: RoundedRectangleBorder(
-                                                            borderRadius:
-                                                            BorderRadius
-                                                                .circular(
-                                                                8)),
+                                                          ShapeDecoration(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          side: BorderSide(
+                                                              width: 1,
+                                                              color: Color(
+                                                                  0xFFB5B1B1)),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(5),
+                                                        ),
                                                       ),
                                                       child: Center(
                                                         child: Text(
-                                                          'Select',
-                                                          style: GoogleFonts
-                                                              .inter(
-                                                            color:
-                                                            Colors.white,
-                                                            fontSize: 20.sp,
+                                                          'Others',
+                                                          style:
+                                                              GoogleFonts.inter(
+                                                            color: Color(
+                                                                0xFFB5B1B1),
+                                                            fontSize: 14.sp,
                                                             fontWeight:
-                                                            FontWeight
-                                                                .w500,
+                                                                FontWeight.w400,
                                                           ),
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                              ],
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 27.h,
+                                                        bottom: 55.h,
+                                                        left: 47.w,
+                                                        right: 36.w),
+                                                    child: GestureDetector(
+                                                      onTap: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                      child: Container(
+                                                        width: 340.w,
+                                                        height: 56.h,
+                                                        decoration:
+                                                            ShapeDecoration(
+                                                          color:
+                                                              Color(0xFF000B17),
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8)),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            'Select',
+                                                            style: GoogleFonts
+                                                                .inter(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 20.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },);
+                                          );
+                                        },
+                                      );
                                     },
                                   );
                                 },

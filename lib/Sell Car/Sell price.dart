@@ -1,21 +1,20 @@
-import 'package:drive_to_go/CAR/Media.dart';
-import 'package:drive_to_go/CAR/rent%20car.dart';
+import 'package:drive_to_go/Sell%20Car/Sell%20Car.dart';
+import 'package:drive_to_go/Sell%20Car/UploadImage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Price extends StatefulWidget {
-  const Price({super.key});
+class SellPrice extends StatefulWidget {
+  const SellPrice({super.key});
 
   @override
-  State<Price> createState() => _PriceState();
+  State<SellPrice> createState() => _SellPriceState();
 }
 
-class _PriceState extends State<Price> {
+class _SellPriceState extends State<SellPrice> {
   bool _switchValue = true;
   double _currentSliderValue = 20;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +31,7 @@ class _PriceState extends State<Price> {
                       onTap: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (_) => Rent(),
+                            builder: (_) => Sell(),
                           ),
                         );
                       },
@@ -75,7 +74,7 @@ class _PriceState extends State<Price> {
                 ),
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 30.w, vertical: 38.h),
+                  EdgeInsets.symmetric(horizontal: 30.w, vertical: 38.h),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -95,7 +94,7 @@ class _PriceState extends State<Price> {
                         value: _switchValue,
                         onChanged: (value) {
                           setState(
-                            () {
+                                () {
                               _switchValue = value;
                             },
                           );
@@ -162,14 +161,14 @@ class _PriceState extends State<Price> {
                           ),
                           Slider(
                             overlayColor:
-                                WidgetStatePropertyAll(Color(0x3F000000)),
+                            WidgetStatePropertyAll(Color(0x3F000000)),
                             value: _currentSliderValue,
                             max: 100,
                             divisions: 5,
                             label: _currentSliderValue.round().toString(),
                             onChanged: (double value) {
                               setState(
-                                () {
+                                    () {
                                   _currentSliderValue = value;
                                 },
                               );
@@ -264,14 +263,14 @@ class _PriceState extends State<Price> {
                           ),
                           Slider(
                             overlayColor:
-                                WidgetStatePropertyAll(Color(0x3F000000)),
+                            WidgetStatePropertyAll(Color(0x3F000000)),
                             value: _currentSliderValue,
                             max: 100,
                             divisions: 5,
                             label: _currentSliderValue.round().toString(),
                             onChanged: (double value) {
                               setState(
-                                () {
+                                    () {
                                   _currentSliderValue = value;
                                 },
                               );
@@ -317,7 +316,7 @@ class _PriceState extends State<Price> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => Media(),
+                          builder: (_) => Uploadimage(),
                         ),
                       );
                     },
