@@ -1,18 +1,19 @@
-import 'package:drive_to_go/Home.dart';
-import 'package:drive_to_go/RentCAR/price.dart';
+import 'package:drive_to_go/UI/Sell%20Car/Home.dart';
+import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class Rent extends StatefulWidget {
-  const Rent({super.key});
+
+class Sell extends StatefulWidget {
+  const Sell({super.key});
 
   @override
-  State<Rent> createState() => _RentState();
+  State<Sell> createState() => _SellState();
 }
 
-class _RentState extends State<Rent> {
+class _SellState extends State<Sell> {
   final TextEditingController model = TextEditingController();
   final TextEditingController type = TextEditingController();
   final TextEditingController year = TextEditingController();
@@ -143,7 +144,7 @@ class _RentState extends State<Rent> {
                                 },
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       selectedVehicle ?? "Select Vehicle Type",
@@ -168,7 +169,7 @@ class _RentState extends State<Rent> {
                                         setState(() {
                                           selectedVehicle = value;
                                           isDropdownExpanded =
-                                              false; // Close dropdown on selection
+                                          false; // Close dropdown on selection
                                         });
                                       },
                                       title: Text(
@@ -301,7 +302,7 @@ class _RentState extends State<Rent> {
                                       return StatefulBuilder(
                                         builder: (BuildContext context,
                                             void Function(void Function())
-                                                setState) {
+                                            setState) {
                                           return SizedBox(
                                             height: 640.h,
                                             child: Padding(
@@ -316,7 +317,7 @@ class _RentState extends State<Rent> {
                                                       color: Color(0xFF000B17),
                                                       fontSize: 20.sp,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(height: 26.h),
@@ -326,80 +327,80 @@ class _RentState extends State<Rent> {
                                                         color: Colors.black),
                                                     decoration: InputDecoration(
                                                       contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 10.h),
                                                       border:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       enabledBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                         borderSide: BorderSide(
                                                             color: Color(
                                                                 0xFF000B17)),
                                                       ),
                                                       focusedBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                         borderSide: BorderSide(
                                                             color: Color(
                                                                 0xFF000B17)),
                                                       ),
                                                       errorBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                             color: Colors.red),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       prefixIcon:
-                                                          Icon(Icons.search),
+                                                      Icon(Icons.search),
                                                       hintText:
-                                                          'Search brand here',
+                                                      'Search brand here',
                                                       hintStyle:
-                                                          GoogleFonts.inter(
+                                                      GoogleFonts.inter(
                                                         color:
-                                                            Color(0xFF000B17),
+                                                        Color(0xFF000B17),
                                                         fontSize: 14.sp,
                                                         fontWeight:
-                                                            FontWeight.w400,
+                                                        FontWeight.w400,
                                                       ),
                                                     ),
                                                   ),
                                                   Expanded(
                                                     child: ListView.builder(
                                                       itemCount:
-                                                          brandOption.length,
+                                                      brandOption.length,
                                                       itemBuilder:
                                                           (BuildContext context,
-                                                              int index) {
+                                                          int index) {
                                                         final option =
-                                                            brandOption[index];
+                                                        brandOption[index];
                                                         return RadioListTile<
                                                             String>(
                                                           value:
-                                                              option['value'],
+                                                          option['value'],
                                                           groupValue:
-                                                              selectedBrand,
+                                                          selectedBrand,
                                                           // Sync the groupValue with the updated selectedBrand
                                                           onChanged: (value) {
                                                             setState(() {
                                                               selectedBrand =
                                                                   value ?? '';
                                                               brandController
-                                                                      .text =
+                                                                  .text =
                                                                   selectedBrand;
                                                             });
                                                             Navigator.of(
-                                                                    context)
+                                                                context)
                                                                 .pop(); // Close the modal after selection
                                                           },
                                                           title: Text(
@@ -408,8 +409,8 @@ class _RentState extends State<Rent> {
                                                                 .lato(
                                                               fontSize: 18,
                                                               fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
+                                                              FontWeight
+                                                                  .w400,
                                                               color: Colors
                                                                   .black87,
                                                             ),
@@ -420,7 +421,7 @@ class _RentState extends State<Rent> {
                                                             size: 30,
                                                           ),
                                                           activeColor:
-                                                              Colors.black,
+                                                          Colors.black,
                                                         );
                                                       },
                                                     ),
@@ -496,7 +497,7 @@ class _RentState extends State<Rent> {
                                       return StatefulBuilder(
                                         builder: (BuildContext context,
                                             void Function(void Function())
-                                                setState) {
+                                            setState) {
                                           return SizedBox(
                                             height: 640.h,
                                             child: Padding(
@@ -514,7 +515,7 @@ class _RentState extends State<Rent> {
                                                       color: Color(0xFF000B17),
                                                       fontSize: 20.sp,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -525,53 +526,53 @@ class _RentState extends State<Rent> {
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         decorationThickness:
-                                                            0.sp),
+                                                        0.sp),
                                                     decoration: InputDecoration(
                                                       contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 10.h),
                                                       border:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       enabledBorder: OutlineInputBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.r),
+                                                          BorderRadius
+                                                              .circular(
+                                                              5.r),
                                                           borderSide: BorderSide(
                                                               color: Color(
                                                                   0xFF000B17))),
                                                       focusedBorder: OutlineInputBorder(
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.r),
+                                                          BorderRadius
+                                                              .circular(
+                                                              5.r),
                                                           borderSide: BorderSide(
                                                               color: Color(
                                                                   0xFF000B17))),
                                                       errorBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                             color: Colors.red),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       prefixIcon:
-                                                          Icon(Icons.search),
+                                                      Icon(Icons.search),
                                                       hintText: 'Search here',
                                                       hintStyle:
-                                                          GoogleFonts.inter(
+                                                      GoogleFonts.inter(
                                                         textStyle: TextStyle(
                                                           color:
-                                                              Color(0xFF000B17),
+                                                          Color(0xFF000B17),
                                                           fontSize: 14.sp,
                                                           fontFamily: 'Inter',
                                                           fontWeight:
-                                                              FontWeight.w400,
+                                                          FontWeight.w400,
                                                         ),
                                                       ),
                                                     ),
@@ -581,57 +582,57 @@ class _RentState extends State<Rent> {
                                                         itemCount: 1,
                                                         itemBuilder:
                                                             (BuildContext
-                                                                    context,
-                                                                int index) {
+                                                        context,
+                                                            int index) {
                                                           return Column(
                                                             children:
-                                                                modelOption.map(
+                                                            modelOption.map(
                                                                     (option) {
-                                                              return RadioListTile<
-                                                                  String>(
-                                                                value: option[
+                                                                  return RadioListTile<
+                                                                      String>(
+                                                                    value: option[
                                                                     'value'],
-                                                                groupValue:
+                                                                    groupValue:
                                                                     selectedmodel,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(() {
-                                                                    selectedmodel =
-                                                                        value;
-                                                                    brandController
+                                                                    onChanged:
+                                                                        (value) {
+                                                                      setState(() {
+                                                                        selectedmodel =
+                                                                            value;
+                                                                        brandController
                                                                             .text !=
-                                                                        value;
+                                                                            value;
 
-                                                                    // Close dropdown on selection
-                                                                  });
-                                                                },
-                                                                title: Text(
-                                                                  option[
+                                                                        // Close dropdown on selection
+                                                                      });
+                                                                    },
+                                                                    title: Text(
+                                                                      option[
                                                                       'value'],
-                                                                  style:
+                                                                      style:
                                                                       GoogleFonts
                                                                           .lato(
-                                                                    fontSize:
+                                                                        fontSize:
                                                                         18,
-                                                                    fontWeight:
+                                                                        fontWeight:
                                                                         FontWeight
                                                                             .w400,
-                                                                    color: Colors
-                                                                        .black87,
-                                                                  ),
-                                                                ),
-                                                                secondary: Icon(
-                                                                  option[
+                                                                        color: Colors
+                                                                            .black87,
+                                                                      ),
+                                                                    ),
+                                                                    secondary: Icon(
+                                                                      option[
                                                                       'icon'],
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 30,
-                                                                ),
-                                                                activeColor:
+                                                                      color: Colors
+                                                                          .black,
+                                                                      size: 30,
+                                                                    ),
+                                                                    activeColor:
                                                                     Colors
                                                                         .black,
-                                                              );
-                                                            }).toList(),
+                                                                  );
+                                                                }).toList(),
                                                           );
                                                         }),
                                                   ),
@@ -644,28 +645,28 @@ class _RentState extends State<Rent> {
                                                       width: 347.w,
                                                       height: 54.h,
                                                       decoration:
-                                                          ShapeDecoration(
+                                                      ShapeDecoration(
                                                         shape:
-                                                            RoundedRectangleBorder(
+                                                        RoundedRectangleBorder(
                                                           side: BorderSide(
                                                               width: 1,
                                                               color: Color(
                                                                   0xFFB5B1B1)),
                                                           borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
+                                                          BorderRadius
+                                                              .circular(5),
                                                         ),
                                                       ),
                                                       child: Center(
                                                         child: Text(
                                                           'Others',
                                                           style:
-                                                              GoogleFonts.inter(
+                                                          GoogleFonts.inter(
                                                             color: Color(
                                                                 0xFFB5B1B1),
                                                             fontSize: 14.sp,
                                                             fontWeight:
-                                                                FontWeight.w400,
+                                                            FontWeight.w400,
                                                           ),
                                                         ),
                                                       ),
@@ -686,14 +687,14 @@ class _RentState extends State<Rent> {
                                                         width: 340.w,
                                                         height: 56.h,
                                                         decoration:
-                                                            ShapeDecoration(
+                                                        ShapeDecoration(
                                                           color:
-                                                              Color(0xFF000B17),
+                                                          Color(0xFF000B17),
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                  8)),
                                                         ),
                                                         child: Center(
                                                           child: Text(
@@ -701,11 +702,11 @@ class _RentState extends State<Rent> {
                                                             style: GoogleFonts
                                                                 .inter(
                                                               color:
-                                                                  Colors.white,
+                                                              Colors.white,
                                                               fontSize: 20.sp,
                                                               fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                              FontWeight
+                                                                  .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -783,7 +784,7 @@ class _RentState extends State<Rent> {
                                       return StatefulBuilder(
                                         builder: (BuildContext context,
                                             void Function(void Function())
-                                                setState) {
+                                            setState) {
                                           return SizedBox(
                                             height: 640.h,
                                             child: Padding(
@@ -801,7 +802,7 @@ class _RentState extends State<Rent> {
                                                       color: Color(0xFF000B17),
                                                       fontSize: 20.sp,
                                                       fontWeight:
-                                                          FontWeight.w500,
+                                                      FontWeight.w500,
                                                     ),
                                                   ),
                                                   SizedBox(
@@ -812,57 +813,57 @@ class _RentState extends State<Rent> {
                                                     style: TextStyle(
                                                         color: Colors.black,
                                                         decorationThickness:
-                                                            0.sp),
+                                                        0.sp),
                                                     decoration: InputDecoration(
                                                       contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
+                                                      EdgeInsets.symmetric(
+                                                          vertical: 10.h),
                                                       border:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       enabledBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                         borderSide: BorderSide(
                                                           color:
-                                                              Color(0xFF000B17),
+                                                          Color(0xFF000B17),
                                                         ),
                                                       ),
                                                       focusedBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                         borderSide: BorderSide(
                                                           color:
-                                                              Color(0xFF000B17),
+                                                          Color(0xFF000B17),
                                                         ),
                                                       ),
                                                       errorBorder:
-                                                          OutlineInputBorder(
+                                                      OutlineInputBorder(
                                                         borderSide: BorderSide(
                                                             color: Colors.red),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
+                                                        BorderRadius
+                                                            .circular(5.r),
                                                       ),
                                                       prefixIcon:
-                                                          Icon(Icons.search),
+                                                      Icon(Icons.search),
                                                       hintText: 'Search here',
                                                       hintStyle:
-                                                          GoogleFonts.inter(
+                                                      GoogleFonts.inter(
                                                         textStyle: TextStyle(
                                                           color:
-                                                              Color(0xFF000B17),
+                                                          Color(0xFF000B17),
                                                           fontSize: 14.sp,
                                                           fontFamily: 'Inter',
                                                           fontWeight:
-                                                              FontWeight.w400,
+                                                          FontWeight.w400,
                                                         ),
                                                       ),
                                                     ),
@@ -875,21 +876,21 @@ class _RentState extends State<Rent> {
                                                         itemCount: 1,
                                                         itemBuilder:
                                                             (BuildContext
-                                                                    context,
-                                                                int index) {
+                                                        context,
+                                                            int index) {
                                                           return Column(
                                                             children: typeOption
                                                                 .map((option) {
                                                               return RadioListTile<
                                                                   String>(
                                                                 value: option[
-                                                                    'value'],
+                                                                'value'],
                                                                 groupValue:
-                                                                    selectetype,
+                                                                selectetype,
                                                                 onChanged:
                                                                     (value) {
                                                                   setState(
-                                                                    () {
+                                                                        () {
                                                                       selectetype =
                                                                           value;
                                                                       type.text !=
@@ -901,29 +902,29 @@ class _RentState extends State<Rent> {
                                                                 },
                                                                 title: Text(
                                                                   option[
-                                                                      'value'],
+                                                                  'value'],
                                                                   style:
-                                                                      GoogleFonts
-                                                                          .lato(
+                                                                  GoogleFonts
+                                                                      .lato(
                                                                     fontSize:
-                                                                        18,
+                                                                    18,
                                                                     fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
+                                                                    FontWeight
+                                                                        .w400,
                                                                     color: Colors
                                                                         .black87,
                                                                   ),
                                                                 ),
                                                                 secondary: Icon(
                                                                   option[
-                                                                      'icon'],
+                                                                  'icon'],
                                                                   color: Colors
                                                                       .black,
                                                                   size: 30,
                                                                 ),
                                                                 activeColor:
-                                                                    Colors
-                                                                        .black,
+                                                                Colors
+                                                                    .black,
                                                               );
                                                             }).toList(),
                                                           );
@@ -937,34 +938,34 @@ class _RentState extends State<Rent> {
                                                     height: 54.h,
                                                     decoration: ShapeDecoration(
                                                       shape:
-                                                          RoundedRectangleBorder(
+                                                      RoundedRectangleBorder(
                                                         side: BorderSide(
                                                             width: 1,
                                                             color: Color(
                                                                 0xFFB5B1B1)),
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
+                                                        BorderRadius
+                                                            .circular(5),
                                                       ),
                                                     ),
                                                     child: Center(
                                                       child: Text(
                                                         'Others',
                                                         style:
-                                                            GoogleFonts.inter(
+                                                        GoogleFonts.inter(
                                                           color:
-                                                              Color(0xFFB5B1B1),
+                                                          Color(0xFFB5B1B1),
                                                           fontSize: 14.sp,
                                                           fontWeight:
-                                                              FontWeight.w400,
+                                                          FontWeight.w400,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
                                                   Padding(
                                                     padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 54.h),
+                                                    EdgeInsets.symmetric(
+                                                        vertical: 54.h),
                                                     child: GestureDetector(
                                                       onTap: () {
                                                         Navigator.of(context)
@@ -974,14 +975,14 @@ class _RentState extends State<Rent> {
                                                         width: 347.w,
                                                         height: 50.h,
                                                         decoration:
-                                                            ShapeDecoration(
+                                                        ShapeDecoration(
                                                           color:
-                                                              Color(0xFF001B39),
+                                                          Color(0xFF001B39),
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
+                                                              BorderRadius
+                                                                  .circular(
+                                                                  5)),
                                                         ),
                                                         child: Center(
                                                           child: Text(
@@ -989,11 +990,11 @@ class _RentState extends State<Rent> {
                                                             style: GoogleFonts
                                                                 .inter(
                                                               color:
-                                                                  Colors.white,
+                                                              Colors.white,
                                                               fontSize: 20.sp,
                                                               fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
+                                                              FontWeight
+                                                                  .w500,
                                                             ),
                                                           ),
                                                         ),
@@ -1051,13 +1052,13 @@ class _RentState extends State<Rent> {
                                         elevation: 10,
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          BorderRadius.circular(10.0),
                                         ),
                                         builder: (BuildContext context) {
                                           return StatefulBuilder(
                                             builder: (BuildContext context,
                                                 void Function(void Function())
-                                                    setState) {
+                                                setState) {
                                               return SizedBox(
                                                 height: 640.h,
                                                 child: Padding(
@@ -1074,7 +1075,7 @@ class _RentState extends State<Rent> {
                                                         style: TextStyle(
                                                           fontSize: 18,
                                                           fontWeight:
-                                                              FontWeight.w600,
+                                                          FontWeight.w600,
                                                           color: Colors.brown,
                                                         ),
                                                       ),
@@ -1082,12 +1083,12 @@ class _RentState extends State<Rent> {
                                                         child: CupertinoPicker(
                                                           itemExtent: 32,
                                                           scrollController:
-                                                              FixedExtentScrollController(
+                                                          FixedExtentScrollController(
                                                             initialItem:
-                                                                3, // Adjust this to match the default year
+                                                            3, // Adjust this to match the default year
                                                           ),
                                                           children: List<
-                                                                  Widget>.generate(
+                                                              Widget>.generate(
                                                               25, (int index) {
                                                             return Center(
                                                               child: Text(
@@ -1095,7 +1096,7 @@ class _RentState extends State<Rent> {
                                                                     .toString(),
                                                                 style: TextStyle(
                                                                     fontSize:
-                                                                        20),
+                                                                    20),
                                                               ),
                                                             );
                                                           }),
@@ -1114,39 +1115,39 @@ class _RentState extends State<Rent> {
                                                       Padding(
                                                         padding: EdgeInsets
                                                             .symmetric(
-                                                                vertical: 54.h),
+                                                            vertical: 54.h),
                                                         child: GestureDetector(
                                                           onTap: () {
                                                             Navigator.of(
-                                                                    context)
+                                                                context)
                                                                 .pop();
                                                           },
                                                           child: Container(
                                                             width: 347.w,
                                                             height: 50.h,
                                                             decoration:
-                                                                ShapeDecoration(
+                                                            ShapeDecoration(
                                                               color: Color(
                                                                   0xFF001B39),
                                                               shape: RoundedRectangleBorder(
                                                                   borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5)),
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                      5)),
                                                             ),
                                                             child: Center(
                                                               child: Text(
                                                                 'Select',
                                                                 style:
-                                                                    GoogleFonts
-                                                                        .inter(
+                                                                GoogleFonts
+                                                                    .inter(
                                                                   color: Colors
                                                                       .white,
                                                                   fontSize:
-                                                                      20.sp,
+                                                                  20.sp,
                                                                   fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
+                                                                  FontWeight
+                                                                      .w500,
                                                                 ),
                                                               ),
                                                             ),
@@ -1155,16 +1156,16 @@ class _RentState extends State<Rent> {
                                                       ),
                                                       Padding(
                                                         padding:
-                                                            EdgeInsets.only(
-                                                                left: 10.w),
+                                                        EdgeInsets.only(
+                                                            left: 10.w),
                                                         child: Text(
                                                           selectedyear
                                                               .toString(),
                                                           style:
-                                                              GoogleFonts.lato(
+                                                          GoogleFonts.lato(
                                                             fontSize: 18.sp,
                                                             fontWeight:
-                                                                FontWeight.w400,
+                                                            FontWeight.w400,
                                                           ),
                                                         ),
                                                       ),
@@ -1177,7 +1178,7 @@ class _RentState extends State<Rent> {
                                         });
                                   },
                                   child:
-                                      Icon(Icons.keyboard_arrow_down_outlined)),
+                                  Icon(Icons.keyboard_arrow_down_outlined)),
                             ],
                           ),
                         ),
@@ -1188,7 +1189,7 @@ class _RentState extends State<Rent> {
                       GestureDetector(
                         onTap: () {
                           Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Price()));
+                              MaterialPageRoute(builder: (_) => SellPrice()));
                         },
                         child: Padding(
                           padding: EdgeInsets.only(bottom: 37.h),

@@ -1,5 +1,6 @@
-import 'package:drive_to_go/Sell%20Car/Sell%20Car.dart';
-import 'package:drive_to_go/Sell%20Car/UploadImage.dart';
+
+import 'package:drive_to_go/UI/Sell%20Car/Sell%20Car.dart';
+import 'package:drive_to_go/UI/Sell%20Car/UploadImage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
