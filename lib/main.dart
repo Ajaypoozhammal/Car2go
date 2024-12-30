@@ -1,6 +1,5 @@
-import 'package:drive_to_go/Bloc/get_all_by_bloc.dart';
-import 'package:drive_to_go/UI/RentCAR/price.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Home.dart';
+import 'package:drive_to_go/Bloc/Sell/Sell%20Delete/delete_sell_bloc.dart';
+import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20Admin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +21,15 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
-          return BlocProvider(
-            create: (context) => GetAllByBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => GetAllByBloc(),
+              ),
+              BlocProvider(
+                create: (context) => DeleteSellBloc(),
+              ),
+            ],
             child: MaterialApp(debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: ThemeData(

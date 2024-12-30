@@ -1,6 +1,8 @@
 import 'dart:ui';
 
-import 'package:drive_to_go/Bloc/get_all_by_bloc.dart';
+import 'package:drive_to_go/Bloc/Sell/Sell%20Delete/delete_sell_bloc.dart';
+import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
+import 'package:drive_to_go/Repository/ModelClass/DeleteSellModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/GetallbyModelclass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,11 +18,12 @@ class Admin extends StatefulWidget {
 
 class _AdminState extends State<Admin> {
   late List<GetallbyModelclass> data;
+  late DeleteSellModel data1;
 
   @override
   void initState() {
     BlocProvider.of<GetAllByBloc>(context).add(FetchGetAllBy());
-    // TODO: implement initState
+
     super.initState();
   }
 
@@ -36,14 +39,14 @@ class _AdminState extends State<Admin> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(right: 170),
+                  padding: EdgeInsets.symmetric(horizontal: 10.w),
                   child: Container(
                     width: 120.w,
                     height: 50.h,
                     decoration: ShapeDecoration(
                       color: Color(0xFF8A33FD),
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8)),
+                          borderRadius: BorderRadius.circular(8.r)),
                     ),
                     child: Center(
                       child: Text(
@@ -95,7 +98,8 @@ class _AdminState extends State<Admin> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8)),
                               ),
-                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(top: 5),
@@ -121,9 +125,11 @@ class _AdminState extends State<Admin> {
                                               ),
                                             ),
                                             child: Padding(
-                                              padding:  EdgeInsets.only(left:5),
+                                              padding: EdgeInsets.only(left: 5),
                                               child: Image.network(
-                                                data[index].photos![0].toString(),
+                                                data[index]
+                                                    .photos![0]
+                                                    .toString(),
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -152,18 +158,59 @@ class _AdminState extends State<Admin> {
                                                 PopupMenuItem(
                                                   value: 2,
                                                   // row has two child icon and text
-                                                  child: Row(
-                                                    children: [
-                                                      Icon(
-                                                        Icons.delete,
-                                                        color: Colors.red,
-                                                      ),
-                                                      SizedBox(
-                                                        // sized box with width 10
-                                                        width: 10,
-                                                      ),
-                                                      Text("Delete")
-                                                    ],
+                                                  child: BlocListener<
+                                                      DeleteSellBloc,
+                                                      DeleteSellState>(
+                                                    listener: (context, state) {
+                                                      if (state
+                                                          is DeleteSellLoading) {
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (ctx) =>    Center(
+                                                              child:
+                                                              CircularProgressIndicator(),
+                                                            ));
+
+                                                      }
+                                                      if (state
+                                                          is DeleteSellError) {
+                                                        Navigator.of(context).pop();
+                                                        showDialog(
+                                                            context: context,
+                                                            builder: (ctx) =>     Center(
+                                                              child: Text("Error"),
+                                                            ));
+
+                                                      }
+                                                      if (state
+                                                          is DeleteSellLoaded) {
+                                                        Navigator.of(context).pop();
+                                                        BlocProvider.of<GetAllByBloc>(context).add(FetchGetAllBy());
+                                                      }
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        GestureDetector(
+                                                          onTap: () {
+                                                            BlocProvider.of<
+                                                                        DeleteSellBloc>(
+                                                                    context)
+                                                                .add(
+                                                                    FetchDeleteSell(id:data[index].id.toString()
+                                                                    ));
+                                                          },
+                                                          child: Icon(
+                                                            Icons.delete,
+                                                            color: Colors.red,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          // sized box with width 10
+                                                          width: 10,
+                                                        ),
+                                                        Text("Delete")
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -175,9 +222,13 @@ class _AdminState extends State<Admin> {
                                         ],
                                       ),
                                     ),
-                                  ),SizedBox(height: 10.h,),
+                                  ),
+                                  SizedBox(
+                                    height: 10.h,
+                                  ),
                                   Padding(
-                                    padding:  EdgeInsets.symmetric(horizontal:10),
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 10),
                                     child: Text(
                                       data[index].brand.toString(),
                                       style: GoogleFonts.merriweather(
@@ -208,7 +259,6 @@ class _AdminState extends State<Admin> {
                                           fontWeight: FontWeight.w300,
                                         ),
                                       ),
-
                                       SizedBox(
                                         width: 20.w,
                                       ),
