@@ -1,3 +1,5 @@
+
+
 class RentAllModel {
   RentAllModel({
       this.location, 
@@ -89,6 +91,11 @@ class RentAllModel {
     map['available'] = available;
     map['__v'] = v;
     return map;
+  }
+  static List<RentAllModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? []
+        : json.map((value) => RentAllModel.fromJson(value)).toList();
   }
 
 }

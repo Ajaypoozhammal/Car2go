@@ -12,7 +12,15 @@ class RentAllBloc extends Bloc<RentAllEvent, RentAllState> {
 
   RentAllBloc() : super(RentAllInitial()) {
     on<RentAllEvent>((event, emit)async{
-
+      emit(RentAllLoading());
+      try{
+        rentAllModel= await getallbyApi.rentallby();
+        emit(RentAllLoaded());
+      }
+      catch(e){
+        print(e.toString());
+        emit(RentAllError());
+      }
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:drive_to_go/Repository/Api/Api%20client.dart';
+import 'package:drive_to_go/Repository/ModelClass/DeleteRentModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/DeleteSellModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/GetallbyModelclass.dart';
 import 'package:drive_to_go/Repository/ModelClass/RentAllModel.dart';
@@ -39,5 +40,15 @@ class GetallbyApi {
     };
     Response response = await apiClient.invokeAPI(trendingpath, 'GET', body);
     return RentAllModel.listFromJson(jsonDecode(response.body));
+  }
+
+  Future < DeleteRentModel> getDeleteRent(String id) async {
+    String trendingpath = 'http://45.159.221.50:8868/api/delete-vehicle/$id';
+    var body = {
+
+    };
+    Response response = await apiClient.invokeAPI(trendingpath, 'DELETE', body);
+
+    return DeleteRentModel.fromJson(jsonDecode(response.body));
   }
 }
