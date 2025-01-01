@@ -16,6 +16,8 @@ class SellPrice extends StatefulWidget {
 class _SellPriceState extends State<SellPrice> {
   bool _switchValue = true;
   double _currentSliderValue = 20;
+  double _currentSliderValue1 = 20;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +130,7 @@ class _SellPriceState extends State<SellPrice> {
                     height: 107,
                     decoration: ShapeDecoration(
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 1, color: Color(0xFFB5B1B1)),
+                        side: BorderSide(width: 1.w, color: Color(0xFFB5B1B1)),
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
@@ -265,14 +267,14 @@ class _SellPriceState extends State<SellPrice> {
                           Slider(
                             overlayColor:
                             WidgetStatePropertyAll(Color(0x3F000000)),
-                            value: _currentSliderValue,
+                            value: _currentSliderValue1,
                             max: 100,
                             divisions: 5,
-                            label: _currentSliderValue.round().toString(),
+                            label: _currentSliderValue1.round().toString(),
                             onChanged: (double value) {
                               setState(
                                     () {
-                                  _currentSliderValue = value;
+                                  _currentSliderValue1 = value;
                                 },
                               );
                             },

@@ -1,5 +1,4 @@
 
-
 class RentAllModel {
   RentAllModel({
       this.location, 

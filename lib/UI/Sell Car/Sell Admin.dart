@@ -18,7 +18,6 @@ class Admin extends StatefulWidget {
 
 class _AdminState extends State<Admin> {
   late List<GetallbyModelclass> data;
-  late DeleteSellModel data1;
 
   @override
   void initState() {

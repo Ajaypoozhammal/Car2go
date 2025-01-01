@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:drive_to_go/Repository/Api/Api%20client.dart';
+import 'package:drive_to_go/Repository/ModelClass/CreateBuyModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/DeleteRentModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/DeleteSellModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/GetallbyModelclass.dart';
@@ -50,5 +51,55 @@ class GetallbyApi {
     Response response = await apiClient.invokeAPI(trendingpath, 'DELETE', body);
 
     return DeleteRentModel.fromJson(jsonDecode(response.body));
+  }
+
+
+  Future<CreateBuyModel> getCreateBuy(
+      String brand,
+      String model,
+      String photos,
+      String description,
+      String gearType,
+      String fuelType,
+      String vehicleColor,
+      String rentPrice,
+      String mileage,
+      String noOfSeats,
+      String rating,
+      String noOfDoors,
+      String ownerName,
+      String ownerPhoneNumber,
+      String ownerPlace,
+      String location,
+      ) async {
+    String trendingpath = 'http://45.159.221.50:9890/api/signup';
+    print(trendingpath);
+    var body = {
+      "brand": brand,
+      "model": model,
+      "description": description,
+      "rentPrice": rentPrice,
+      "mileage": mileage,
+      "photos": photos,
+      "vehicleColor": vehicleColor,
+      "gearType": gearType,
+      "fuelType": fuelType,
+      "noOfSeats": noOfSeats,
+      "rating": rating,
+      "noOfDoors":noOfDoors,
+      "ownerName": ownerName,
+      "ownerPhoneNumber": ownerPhoneNumber,
+      "ownerPlace": ownerPlace,
+      "location": { "type": "Point", "coordinates": [-73.935242, 40.730610] },
+      "available": true,
+      "latestModel": true,
+      "highMilage": false
+    };
+    print('hello' + body.toString());
+    Response response =
+    await apiClient.invokeAPI(trendingpath, 'POST', jsonEncode(body));
+
+    print(response.body);
+    return CreateBuyModel.fromJson(jsonDecode(response.body));
   }
 }

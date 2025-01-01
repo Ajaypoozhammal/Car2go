@@ -134,7 +134,7 @@ class _RentadminState extends State<Rentadmin> {
                                                 ),
                                               ),
                                               Padding(
-                                                padding: EdgeInsets.only(left: 100),
+                                                padding: EdgeInsets.only(left: 100.w),
                                                 child: PopupMenuButton<int>(
                                                   iconColor: Colors.white,
                                                   itemBuilder: (context) => [
