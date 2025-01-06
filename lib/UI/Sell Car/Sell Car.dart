@@ -1,6 +1,9 @@
+import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
+import 'package:drive_to_go/UI/Sell%20Car/GoogleMap.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -26,6 +29,9 @@ class _SellState extends State<Sell> {
   final TextEditingController ownerphonenumber = TextEditingController();
   final TextEditingController ownerplace = TextEditingController();
   final TextEditingController location = TextEditingController();
+  final TextEditingController fueltype = TextEditingController();
+
+  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,332 +41,483 @@ class _SellState extends State<Sell> {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 21.w),
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 34.h,
-                ),
-                Text(
-                  'Brand',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+            child: Form(
+              key: formkey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 34.h,
                   ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  Text(
+                    'Brand',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextFormField(
+                    controller: brand,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  brand!';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Model',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Model',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextFormField(
+                    controller: model,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  Model!';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Rating',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Rating',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: rating,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  rating';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Year',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Description',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    'Year',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                  SizedBox(
+                    height: 5.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Mileage',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'RentPrice',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  TextFormField(
+                    controller: year,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  year';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'GearType',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Description',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: description,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter discription';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'FuelType',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Mileage',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: milege,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  milege!';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Number of Seats',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'Number of Doors',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    'RentPrice',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                  SizedBox(
+                    height: 9.h,
                   ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'ownerName',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 5.h,
-                ),
-                TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'OwnerPhoneNumber',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  TextFormField(
+                    controller: rentprice,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  rentprice';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'OwnerPlace',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
-                    decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Text(
-                  'location',
-                  style: GoogleFonts.inter(
-                    color: Color(0xFF000B17),
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w500,
+                  SizedBox(
+                    height: 20.h,
                   ),
-                ),
-                SizedBox(
-                  height: 9.h,
-                ),
-                TextField(
+                  Text(
+                    'GearType',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextFormField(
+                    controller: geartype,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a geaetype';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
-                )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => SellPrice()));
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 37.h),
-                    child: Container(
-                      width: 340.w,
-                      height: 56.h,
-                      decoration: ShapeDecoration(
-                        color: Color(0xFF000B17),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'FuelType',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: fueltype,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  FuelType';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Number of Seats',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: nuberofseat,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a number of seat';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'Number of Doors',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: nuberofdoors,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  Number of Doors';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'ownerName',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: ownername,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  owner name';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'OwnerPhoneNumber',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextFormField(
+                    controller: ownerphonenumber,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  Phone Number';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'OwnerPlace',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextFormField(
+                    controller: ownerplace,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  Owner Place';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
+                    'location',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 9.h,
+                  ),
+                  TextField(
+                    controller: location,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                      prefixIcon: Icon(Icons.map),
+                      hintText: 'Type your location or search in map',
+                      hintStyle: TextStyle(
+                        color: Color(0xFF627487),
+                        fontSize: 16.sp,
+                        fontFamily: 'sfprodisplay',
+                        fontWeight: FontWeight.w500,
                       ),
-                      child: Center(
-                        child: Text(
-                          'NEXT',
-                          style: GoogleFonts.inter(
-                            color: Colors.white,
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w500,
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (_) => Googlemap(controller: location,)));
+                        },
+                        child: Icon(
+                          Icons.map_outlined,
+                          color: Color(0xFF627487),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 37.h),
+                    child: BlocListener<CreateBuyBloc, CreateBuyState>(
+                      listener: (context, state) {
+                        if (state is CreateBuyBlocLoading) {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) => Center(
+                                    child: CircularProgressIndicator(),
+                                  ));
+                          print("loading");
+                        }
+                        if (State is CreateBuyBlocLoaded) {
+                          Navigator.of(context).pop();
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(builder: (_) => SellPrice()),
+                              (route) => false);
+                        }
+                        if (state is CreateBuyBlocError) {
+                          Navigator.of(context).pop();
+
+                          print("error");
+                        }
+                      },
+                      child: GestureDetector(onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (_) => SellPrice()));
+                      },
+                        child: Container(
+                          width: 340.w,
+                          height: 56.h,
+                          decoration: ShapeDecoration(
+                            color: Color(0xFF000B17),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              'NEXT',
+                              style: GoogleFonts.inter(
+                                color: Colors.white,
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

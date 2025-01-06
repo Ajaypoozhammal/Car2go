@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:drive_to_go/Bloc/Sell/Sell%20Delete/delete_sell_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
-import 'package:drive_to_go/Repository/ModelClass/DeleteSellModel.dart';
 import 'package:drive_to_go/Repository/ModelClass/GetallbyModelclass.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
