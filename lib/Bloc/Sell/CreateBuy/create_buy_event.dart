@@ -21,8 +21,9 @@ class FetchCreateBuy extends CreateBuyEvent {
   final String location;
   final String photo;
 
-  FetchCreateBuy(this.photo,
+  FetchCreateBuy(
       {required this.brand,
+      required this.photo,
       required this.model,
       required this.rating,
       required this.year,

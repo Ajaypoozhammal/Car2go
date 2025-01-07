@@ -4,9 +4,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.hardware.location.gps" />
     <application
-        android:label="drive_to_go"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:label="drive_to_go">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -35,6 +35,7 @@
             android:name="flutterEmbedding"
             android:value="2" />
         <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyDQ2c_pOSOFYSjxGMwkFvCVWKjYOM9siow"/>
+
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

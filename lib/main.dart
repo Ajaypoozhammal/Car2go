@@ -1,5 +1,6 @@
 import 'package:drive_to_go/Bloc/Rent/Rent%20Delete/rent_delete_bloc.dart';
 import 'package:drive_to_go/Bloc/Rent/Rent%20all/rent_all_bloc.dart';
+import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/Sell%20Delete/delete_sell_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
 import 'package:drive_to_go/UI/RentCAR/RentAdmin.dart';
@@ -39,6 +40,9 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => RentDeleteBloc(),
+              ),
+              BlocProvider(
+                create: (context) => CreateBuyBloc(),
               )
             ],
             child: MaterialApp(debugShowCheckedModeBanner: false,

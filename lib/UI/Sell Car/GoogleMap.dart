@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Googlemap extends StatefulWidget {
   final TextEditingController controller;
+
   const Googlemap({super.key,required this.controller});
 
   @override

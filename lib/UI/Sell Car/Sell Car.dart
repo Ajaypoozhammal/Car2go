@@ -1,4 +1,5 @@
 import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
+import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
 import 'package:drive_to_go/UI/Sell%20Car/GoogleMap.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
 import 'package:flutter/cupertino.dart';
@@ -443,7 +444,6 @@ class _SellState extends State<Sell> {
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r)),
-                      prefixIcon: Icon(Icons.map),
                       hintText: 'Type your location or search in map',
                       hintStyle: TextStyle(
                         color: Color(0xFF627487),
@@ -453,8 +453,11 @@ class _SellState extends State<Sell> {
                       ),
                       suffixIcon: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (_) => Googlemap(controller: location,)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) =>
+                                  Googlemap(
+                                    controller: location,
+                                  )));
                         },
                         child: Icon(
                           Icons.map_outlined,
@@ -473,7 +476,8 @@ class _SellState extends State<Sell> {
                         if (state is CreateBuyBlocLoading) {
                           showDialog(
                               context: context,
-                              builder: (ctx) => Center(
+                              builder: (ctx) =>
+                                  Center(
                                     child: CircularProgressIndicator(),
                                   ));
                           print("loading");
@@ -482,7 +486,7 @@ class _SellState extends State<Sell> {
                           Navigator.of(context).pop();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (_) => SellPrice()),
-                              (route) => false);
+                                  (route) => false);
                         }
                         if (state is CreateBuyBlocError) {
                           Navigator.of(context).pop();
@@ -490,10 +494,36 @@ class _SellState extends State<Sell> {
                           print("error");
                         }
                       },
-                      child: GestureDetector(onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => SellPrice()));
-                      },
+                      child: GestureDetector(
+                        onTap: () {
+                          final isValid = formkey.currentState!.validate();
+                          if (isValid) {
+                            BlocProvider.of<CreateBuyBloc>(context)
+                                .add(FetchCreateBuy(
+                              brand: brand.text,
+                              model: model.text,
+                              rating: rating.text,
+                              year: year.text,
+                              description: description.text,
+                              mileage: milege.text,
+                              rentprice: rentprice.text,
+                              geartype: geartype.text,
+                              fueltype: fueltype.text,
+                              noOfSeats: nuberofseat.text,
+                              numberofdoors: nuberofdoors.text,
+                              ownername: ownername.text,
+                              ownerphoneNumber: ownerphonenumber.text,
+                              ownerplace: ownerplace.text,
+                              location: location.text, photo: '',
+
+
+
+                            ));
+                          }
+                          formkey.currentState?.save();
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => SellPrice()));
+                        },
                         child: Container(
                           width: 340.w,
                           height: 56.h,
