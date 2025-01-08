@@ -4,10 +4,12 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../main.dart';
+
 class Googlemap extends StatefulWidget {
   final TextEditingController controller;
 
-  const Googlemap({super.key,required this.controller});
+  const Googlemap({  super.key,required this.controller, required googleMapController});
 
   @override
   State<Googlemap> createState() => _GooglemapState();
@@ -30,6 +32,8 @@ class _GooglemapState extends State<Googlemap> {
 
       setState(() {
         widget.controller.text = place.locality??"";
+        lat= position.latitude.toString();
+        long=position.latitude.toString();
       });
 
       print("Address: ${widget.controller.text}");

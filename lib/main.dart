@@ -10,7 +10,8 @@ import 'package:drive_to_go/UI/Sell%20Car/Sell%20Car.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+String lat='';
+String long='';
 void main() {
   runApp(const MyApp());
 }

@@ -6,23 +6,27 @@ sealed class CreateBuyEvent {}
 class FetchCreateBuy extends CreateBuyEvent {
   final String brand;
   final String model;
-  final String rating;
-  final String year;
+  final double rating;
+  final int year;
   final String description;
-  final String mileage;
-  final String rentprice;
+  final int mileage;
+  final int rentprice;
   final String geartype;
   final String fueltype;
-  final String noOfSeats;
-  final String numberofdoors;
+  final int noOfSeats;
+  final int numberofdoors;
   final String ownername;
   final String ownerphoneNumber;
   final String ownerplace;
   final String location;
-  final String photo;
+  final List<String> photo;
+  final String latitude;
+  final String longitude;
 
   FetchCreateBuy(
       {required this.brand,
+      required this.latitude,
+      required this.longitude,
       required this.photo,
       required this.model,
       required this.rating,

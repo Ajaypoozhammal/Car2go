@@ -1,12 +1,14 @@
 import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
-import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
 import 'package:drive_to_go/UI/Sell%20Car/GoogleMap.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
+import 'package:drive_to_go/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Sell extends StatefulWidget {
   const Sell({super.key});
@@ -29,10 +31,12 @@ class _SellState extends State<Sell> {
   final TextEditingController ownername = TextEditingController();
   final TextEditingController ownerphonenumber = TextEditingController();
   final TextEditingController ownerplace = TextEditingController();
-  final TextEditingController location = TextEditingController();
+  late final TextEditingController location = TextEditingController();
   final TextEditingController fueltype = TextEditingController();
 
   final formkey = GlobalKey<FormState>();
+
+  late String locations = '';
 
   @override
   Widget build(BuildContext context) {
@@ -439,8 +443,14 @@ class _SellState extends State<Sell> {
                   SizedBox(
                     height: 9.h,
                   ),
-                  TextField(
+                  TextFormField(
                     controller: location,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a  Phone Number';
+                      }
+                      return null;
+                    },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.r)),
@@ -453,11 +463,14 @@ class _SellState extends State<Sell> {
                       ),
                       suffixIcon: GestureDetector(
                         onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (_) =>
-                                  Googlemap(
-                                    controller: location,
-                                  )));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => Googlemap(
+                                controller: location,
+                                googleMapController: GoogleMapController,
+                              ),
+                            ),
+                          );
                         },
                         child: Icon(
                           Icons.map_outlined,
@@ -476,8 +489,7 @@ class _SellState extends State<Sell> {
                         if (state is CreateBuyBlocLoading) {
                           showDialog(
                               context: context,
-                              builder: (ctx) =>
-                                  Center(
+                              builder: (ctx) => Center(
                                     child: CircularProgressIndicator(),
                                   ));
                           print("loading");
@@ -486,7 +498,7 @@ class _SellState extends State<Sell> {
                           Navigator.of(context).pop();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(builder: (_) => SellPrice()),
-                                  (route) => false);
+                              (route) => false);
                         }
                         if (state is CreateBuyBlocError) {
                           Navigator.of(context).pop();
@@ -502,27 +514,27 @@ class _SellState extends State<Sell> {
                                 .add(FetchCreateBuy(
                               brand: brand.text,
                               model: model.text,
-                              rating: rating.text,
-                              year: year.text,
+                              rating: double.parse(rating.text),
+                              year:  int.parse(year.text),
                               description: description.text,
-                              mileage: milege.text,
-                              rentprice: rentprice.text,
+                              mileage:  int.parse(milege.text),
+                              rentprice: int.parse(rentprice.text),
                               geartype: geartype.text,
                               fueltype: fueltype.text,
-                              noOfSeats: nuberofseat.text,
-                              numberofdoors: nuberofdoors.text,
+                              noOfSeats:  int.parse(nuberofseat.text),
+                              numberofdoors:  int.parse(nuberofdoors.text),
                               ownername: ownername.text,
                               ownerphoneNumber: ownerphonenumber.text,
                               ownerplace: ownerplace.text,
-                              location: location.text, photo: '',
-
-
-
+                              location: location.text,
+                              photo: [],
+                              latitude: lat,
+                              longitude: long,
                             ));
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (_) => SellPrice()));
                           }
                           formkey.currentState?.save();
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => SellPrice()));
                         },
                         child: Container(
                           width: 340.w,

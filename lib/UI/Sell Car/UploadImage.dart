@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20Admin.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Sell%20Car.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
