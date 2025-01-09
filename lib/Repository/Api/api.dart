@@ -41,25 +41,24 @@ class GetallbyApi {
   }
 
   Future<CreateBuyModel> getCreateBuy(
-    String brand,
-    String model,
-    List<String> photos,
-    String description,
-    String gearType,
-    String fuelType,
-    String vehicleColor,
-    int rentPrice,
-    int mileage,
-    String noOfSeats,
-    String rating,
-    String noOfDoors,
-    String ownerName,
-    String ownerPhoneNumber,
-    String ownerPlace,
-    String location,
-      String latitude,
-      String longitude,
-  ) async {
+      {required String brand,
+      required String model,
+      required List<String> photos,
+      required String description,
+      required String gearType,
+      required String vehicleColor,
+      required int rentPrice,
+      required int mileage,
+      required int noOfSeats,
+      required double rating,
+      required int noOfDoors,
+      required String ownerName,
+      required String ownerPhoneNumber,
+      required String ownerPlace,
+      required String location,
+      required String latitude,
+      required String longitude,
+      required String fuelType}) async {
     String trendingpath = 'http://45.159.221.50:9890/api/signup';
     print(trendingpath);
     var body = {
@@ -68,7 +67,7 @@ class GetallbyApi {
       "description": description,
       "rentPrice": rentPrice,
       "mileage": mileage,
-      "photos":[ photos],
+      "photos": [photos],
       "vehicleColor": vehicleColor,
       "gearType": gearType,
       "fuelType": fuelType,

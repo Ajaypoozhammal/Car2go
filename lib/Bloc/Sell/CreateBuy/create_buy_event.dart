@@ -22,24 +22,27 @@ class FetchCreateBuy extends CreateBuyEvent {
   final List<String> photo;
   final String latitude;
   final String longitude;
+  final String vehicleColor;
 
-  FetchCreateBuy(
-      {required this.brand,
-      required this.latitude,
-      required this.longitude,
-      required this.photo,
-      required this.model,
-      required this.rating,
-      required this.year,
-      required this.description,
-      required this.mileage,
-      required this.rentprice,
-      required this.geartype,
-      required this.fueltype,
-      required this.noOfSeats,
-      required this.numberofdoors,
-      required this.ownername,
-      required this.ownerphoneNumber,
-      required this.ownerplace,
-      required this.location});
+  FetchCreateBuy({
+    required this.brand,
+    required this.latitude,
+    required this.longitude,
+    required this.photo,
+    required this.model,
+    required this.rating,
+    required this.year,
+    required this.description,
+    required this.mileage,
+    required this.rentprice,
+    required this.geartype,
+    required this.fueltype,
+    required this.noOfSeats,
+    required this.numberofdoors,
+    required this.ownername,
+    required this.ownerphoneNumber,
+    required this.ownerplace,
+    required this.location,
+    required this.vehicleColor,
+  });
 }

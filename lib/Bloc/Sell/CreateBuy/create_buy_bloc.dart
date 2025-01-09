@@ -17,24 +17,25 @@ class CreateBuyBloc extends Bloc<CreateBuyEvent, CreateBuyState> {
       emit(CreateBuyBlocLoading());
       try {
         createBuyModel = await getallbyApi.getCreateBuy(
-            event.brand,
-            event.location,
-            event.photo,
-            event.description,
-            event.fueltype,
-            event.numberofdoors,
-            event.geartype,
-            event.rentprice,
-            event.ownername,
-            event.ownerphoneNumber,
-            event.ownerplace,
-            event.rating,
-            event.mileage,
-            event.noOfSeats,
-            event.year,
-            event.model,
-            event.longitude,
-            event.latitude);
+            brand: event.brand,
+            model: event.model,
+            photos: event.photo,
+            description: event.description,
+            gearType: event.geartype,
+            vehicleColor: event.vehicleColor,
+            rentPrice: event.rentprice,
+            mileage: event.mileage,
+             noOfSeats: event.noOfSeats,
+            rating: event.rating,
+            noOfDoors: event.numberofdoors,
+            ownerName: event.ownername,
+            ownerPhoneNumber: event.ownerphoneNumber,
+            ownerPlace: event.ownerplace,
+            location: event.location,
+            latitude: event.latitude,
+            longitude: event.longitude,
+            fuelType: event.fueltype,
+           );
         emit(CreateBuyBlocLoaded());
       } catch (e) {
         emit(CreateBuyBlocError());

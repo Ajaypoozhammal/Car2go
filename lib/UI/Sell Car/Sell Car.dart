@@ -31,13 +31,27 @@ class _SellState extends State<Sell> {
   final TextEditingController ownername = TextEditingController();
   final TextEditingController ownerphonenumber = TextEditingController();
   final TextEditingController ownerplace = TextEditingController();
-  late final TextEditingController location = TextEditingController();
+  final TextEditingController location = TextEditingController();
   final TextEditingController fueltype = TextEditingController();
-
+  final TextEditingController vehicleColor = TextEditingController();
+  final TextEditingController image = TextEditingController();
   final formkey = GlobalKey<FormState>();
 
   late String locations = '';
+  List<TextEditingController> controllers = [];
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize with one controller
+    controllers.add(TextEditingController());
+  }
+
+  void addNewTextField() {
+    setState(() {
+      controllers.add(TextEditingController());
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -379,6 +393,33 @@ class _SellState extends State<Sell> {
                     height: 20.h,
                   ),
                   Text(
+                    'vehicleColor',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+                  TextFormField(
+                    controller: ownername,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Enter a vehicleColor';
+                      }
+                      return null;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.r)),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text(
                     'OwnerPhoneNumber',
                     style: GoogleFonts.inter(
                       color: Color(0xFF000B17),
@@ -482,6 +523,109 @@ class _SellState extends State<Sell> {
                   SizedBox(
                     height: 20.h,
                   ),
+                  Text(
+                    'Images',
+                    style: GoogleFonts.inter(
+                      color: Color(0xFF000B17),
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 5.h,
+                  ),
+              ListView.builder(
+                itemCount: controllers.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: controllers[index],
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'upload image';
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.image),
+                              hintText: "upload vehicle images",
+                              hintStyle: TextStyle(
+                                color: Color(0xFF627487),
+                                fontSize: 16,
+                                fontFamily: 'sfprodisplay',
+                                fontWeight: FontWeight.w500,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: addNewTextField,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+                          // SizedBox(height: 100.h,width: 20.h,
+              //   child: ListView.builder(
+              //     itemCount: controllers.length,
+              //     itemBuilder: (context, index) {
+              //       return Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 8.0),
+              //         child: Row(
+              //           children: [
+              //             Expanded(
+              //               child: SizedBox(width:50.h,
+              //                 child: TextFormField(
+              //                   controller: controllers[index],
+              //                   validator: (value) {
+              //                     if (value!.isEmpty) {
+              //                       return 'upload image';
+              //                     }
+              //                     return null;
+              //                   },
+              //                   decoration: InputDecoration(
+              //                     prefixIcon: Icon(Icons.image),
+              //                     hintText: "upload vehicle images",
+              //                     hintStyle: TextStyle(
+              //                       color: Color(0xFF627487),
+              //                       fontSize: 16,
+              //                       fontFamily: 'sfprodisplay',
+              //                       fontWeight: FontWeight.w500,
+              //                     ),
+              //                     border: OutlineInputBorder(
+              //                       borderRadius: BorderRadius.circular(10),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //             SizedBox(width: 8),
+              //             IconButton(
+              //               icon: Icon(Icons.add),
+              //               onPressed: addNewTextField,
+              //             ),
+              //           ],
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 37.h),
                     child: BlocListener<CreateBuyBloc, CreateBuyState>(
@@ -515,14 +659,14 @@ class _SellState extends State<Sell> {
                               brand: brand.text,
                               model: model.text,
                               rating: double.parse(rating.text),
-                              year:  int.parse(year.text),
+                              year: int.parse(year.text),
                               description: description.text,
-                              mileage:  int.parse(milege.text),
+                              mileage: int.parse(milege.text),
                               rentprice: int.parse(rentprice.text),
                               geartype: geartype.text,
                               fueltype: fueltype.text,
-                              noOfSeats:  int.parse(nuberofseat.text),
-                              numberofdoors:  int.parse(nuberofdoors.text),
+                              noOfSeats: int.parse(nuberofseat.text),
+                              numberofdoors: int.parse(nuberofdoors.text),
                               ownername: ownername.text,
                               ownerphoneNumber: ownerphonenumber.text,
                               ownerplace: ownerplace.text,
@@ -530,6 +674,7 @@ class _SellState extends State<Sell> {
                               photo: [],
                               latitude: lat,
                               longitude: long,
+                              vehicleColor: '',
                             ));
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (_) => SellPrice()));
@@ -563,7 +708,6 @@ class _SellState extends State<Sell> {
             ),
           ),
         ),
-      ),
-    );
+      ));
   }
 }
