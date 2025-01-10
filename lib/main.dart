@@ -10,6 +10,8 @@ import 'package:drive_to_go/UI/Sell%20Car/Sell%20Car.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'UI/Sell Car/Sell price.dart';
 String lat='';
 String long='';
 void main() {
@@ -68,7 +70,7 @@ class MyApp extends StatelessWidget {
                       seedColor: Colors.deepPurple),
                   useMaterial3: true,
                 ),
-                home: Sell()
+                home:Home()
             ),
           );
         }
