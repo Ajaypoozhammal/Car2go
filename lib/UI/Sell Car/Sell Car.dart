@@ -1,6 +1,6 @@
 import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
 import 'package:drive_to_go/UI/Sell%20Car/GoogleMap.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Sell%20price.dart';
+import 'package:drive_to_go/UI/Sell%20Car/Sell%20Admin.dart';
 import 'package:drive_to_go/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'UploadImage.dart';
 
 class Sell extends StatefulWidget {
   const Sell({super.key});
@@ -547,7 +546,7 @@ class _SellState extends State<Sell> {
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.r)),
-                        hintText: 'Type your location or search in map',
+                        hintText: 'upload images',
                         hintStyle: TextStyle(
                           color: Color(0xFF627487),
                           fontSize: 16.sp,
@@ -610,7 +609,7 @@ class _SellState extends State<Sell> {
                           if (State is CreateBuyBlocLoaded) {
                             Navigator.of(context).pop();
                             Navigator.of(context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => Uploadimage()),
+                                MaterialPageRoute(builder: (_) => Admin()),
                                 (route) => false);
                           }
                           if (state is CreateBuyBlocError) {
@@ -648,7 +647,7 @@ class _SellState extends State<Sell> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => Uploadimage()));
+                                      builder: (_) => Admin()));
                             }
                             formkey.currentState?.save();
                           },

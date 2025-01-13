@@ -1,17 +1,14 @@
+import 'package:drive_to_go/Bloc/Rent/CreateRent/create_rent_bloc.dart';
 import 'package:drive_to_go/Bloc/Rent/Rent%20Delete/rent_delete_bloc.dart';
 import 'package:drive_to_go/Bloc/Rent/Rent%20all/rent_all_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/CreateBuy/create_buy_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/Sell%20Delete/delete_sell_bloc.dart';
 import 'package:drive_to_go/Bloc/Sell/get%20all/get_all_by_bloc.dart';
-import 'package:drive_to_go/UI/RentCAR/RentAdmin.dart';
 import 'package:drive_to_go/UI/Sell%20Car/Home.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Sell%20Admin.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Sell%20Car.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'UI/Sell Car/Sell price.dart';
 String lat='';
 String long='';
 void main() {
@@ -46,7 +43,10 @@ class MyApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (context) => CreateBuyBloc(),
-              )
+              ),
+              BlocProvider(
+                create: (context) => CreateRentBloc(),
+              ),
             ],
             child: MaterialApp(debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',

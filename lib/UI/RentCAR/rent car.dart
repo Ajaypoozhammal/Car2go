@@ -1,9 +1,16 @@
-import 'package:drive_to_go/UI/RentCAR/price.dart';
-import 'package:drive_to_go/UI/Sell%20Car/Home.dart';
+import 'package:drive_to_go/Bloc/Rent/CreateRent/create_rent_bloc.dart';
+import 'package:drive_to_go/Bloc/Rent/Rent%20all/rent_all_bloc.dart';
+import 'package:drive_to_go/UI/RentCAR/RentAdmin.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../../main.dart';
+import '../Sell Car/GoogleMap.dart';
 
 class Rent extends StatefulWidget {
   const Rent({super.key});
@@ -14,1184 +21,638 @@ class Rent extends StatefulWidget {
 
 class _RentState extends State<Rent> {
   final TextEditingController model = TextEditingController();
-  final TextEditingController type = TextEditingController();
+  final TextEditingController brand = TextEditingController();
+  final TextEditingController rating = TextEditingController();
   final TextEditingController year = TextEditingController();
+  final TextEditingController description = TextEditingController();
+  final TextEditingController milege = TextEditingController();
+  final TextEditingController rentprice = TextEditingController();
+  final TextEditingController geartype = TextEditingController();
+  final TextEditingController nuberofseat = TextEditingController();
+  final TextEditingController nuberofdoors = TextEditingController();
+  final TextEditingController ownername = TextEditingController();
+  final TextEditingController ownerphonenumber = TextEditingController();
+  final TextEditingController ownerplace = TextEditingController();
+  final TextEditingController location = TextEditingController();
+  final TextEditingController fueltype = TextEditingController();
+  final TextEditingController vehicleColor = TextEditingController();
+  final TextEditingController image = TextEditingController();
+  final formkey = GlobalKey<FormState>();
+  final List<String> photos = [];
+  late String locations = '';
 
-  String? selectedVehicle = "Car"; // Default selected option
-  String selectedBrand = ''; // Ensure this is in the parent widget
-  TextEditingController brandController = TextEditingController();
-  final List<Map<String, dynamic>> vehicleOptions = [
-    {
-      'value': 'Car',
-      'icon': Icons.directions_car,
-    },
-    {
-      'value': 'Motorcycle',
-      'icon': Icons.motorcycle,
-    },
-  ];
-  final List<Map<String, dynamic>> brandOption = [
-    {
-      'value': 'BMW',
-      'icon': Icons.directions_car,
-    },
-    {
-      'value': 'Benz',
-      'icon': Icons.car_crash_outlined,
-    },
-    {
-      'value': 'audi',
-      'icon': Icons.car_crash_outlined,
-    },
-  ];
-
-  String? selectedmodel = "";
-  final List<Map<String, dynamic>> modelOption = [
-    {
-      'value': '200sx',
-    },
-    {
-      'value': '240sx',
-    },
-    {
-      'value': '300zx',
-    },
-    {
-      'value': '350z',
-    },
-  ];
-  String? selectetype = "";
-  final List<Map<String, dynamic>> typeOption = [
-    {
-      'value': 'Standard',
-    },
-  ];
-  int selectedyear = 2000;
-
-  bool isDropdownExpanded = false; // To handle the dropdown's expanded state
+  void _addImages() {
+    final images = image.text.trim();
+    if (images.isNotEmpty && !photos.contains(images)) {
+      setState(() {
+        photos.add(images);
+        image.clear();
+      });
+    } else if (images.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please add an images!')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Images already added!')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 21.w),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 70.h,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Add your vehicle',
-                              style: GoogleFonts.lato(
-                                color: Color(0xFF333333),
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => Home(),
-                                    ),
-                                  );
-                                },
-                                child: Icon(
-                                  Icons.close,
-                                  size: 24.sp,
-                                  color: Colors.black,
-                                ))
-                          ],
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 21.w),
+            child: SingleChildScrollView(
+              child: Form(
+                key: formkey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 34.h,
+                    ),
+                    Text(
+                      'Brand',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: brand,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  brand!';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Model',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: model,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  Model!';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Rating',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: rating,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  rating';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Year',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: year,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  year';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Description',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: description,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter discription';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Mileage',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: milege,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  milege!';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'RentPrice',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: rentprice,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  rentprice';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'GearType',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: geartype,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a geaetype';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'FuelType',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: fueltype,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  FuelType';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Number of Seats',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: nuberofseat,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a number of seat';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Number of Doors',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: nuberofdoors,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  Number of Doors';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'ownerName',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: ownername,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  owner name';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'vehicleColor',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+                    TextFormField(
+                      controller: vehicleColor,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a vehicleColor';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'OwnerPhoneNumber',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: ownerphonenumber,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  Phone Number';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'OwnerPlace',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: ownerplace,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  Owner Place';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'location',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 9.h,
+                    ),
+                    TextFormField(
+                      controller: location,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Enter a  Phone Number';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                        hintText: 'Type your location or search in map',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF627487),
+                          fontSize: 16.sp,
+                          fontFamily: 'sfprodisplay',
+                          fontWeight: FontWeight.w500,
                         ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isDropdownExpanded = false;
-                          });
-                        },
-                        child: Container(
-                          width: 360.w,
-                          padding: EdgeInsets.symmetric(
-                              vertical: 8.w, horizontal: 15.h),
-                          decoration: ShapeDecoration(
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(
-                                  width: 1.w, color: Color(0xFFB5B1B1)),
-                              borderRadius: BorderRadius.circular(3.r),
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isDropdownExpanded = !isDropdownExpanded;
-                                  });
-                                },
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      selectedVehicle ?? "Select Vehicle Type",
-                                      style: GoogleFonts.lato(
-                                        fontSize: 18.sp,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black87,
-                                      ),
-                                    ),
-                                    const Icon(Icons.keyboard_arrow_down,
-                                        size: 30),
-                                  ],
-                                ),
-                              ),
-                              if (isDropdownExpanded)
-                                Column(
-                                  children: vehicleOptions.map((option) {
-                                    return RadioListTile<String>(
-                                      value: option['value'],
-                                      groupValue: selectedVehicle,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          selectedVehicle = value;
-                                          isDropdownExpanded =
-                                              false; // Close dropdown on selection
-                                        });
-                                      },
-                                      title: Text(
-                                        option['value'],
-                                        style: GoogleFonts.lato(
-                                          fontSize: 18.sp,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                      secondary: Icon(
-                                        option['icon'],
-                                        color: Colors.black,
-                                        size: 30.sp,
-                                      ),
-                                      activeColor: Colors.black,
-                                    );
-                                  }).toList(),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25.h,
-                      ),
-                      Text(
-                        'Choose from popular brands or add your own',
-                        style: GoogleFonts.lato(
-                          color: Color(0xFFB5B1B1),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      SizedBox(
-                        width: 388.w,
-                        height: 78.h,
-                        child: ListView.separated(
-                          itemCount: 4,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, position) {
-                            return SizedBox(
-                              width: 78.w,
-                              child: Container(
-                                width: 78.w,
-                                height: 78.h,
-                                decoration: ShapeDecoration(
-                                  color: Color(0xFFC8CFD7),
-                                  shape: OvalBorder(),
-                                ),
-                                child: Center(
-                                  child: Image.asset(
-                                    "assets/c.png",
-                                    width: 40.w,
-                                  ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) => Googlemap(
+                                  controller: location,
+                                  googleMapController: GoogleMapController,
                                 ),
                               ),
                             );
                           },
-                          separatorBuilder: (context, position) {
-                            return SizedBox(
-                              width: 15.w,
-                            );
+                          child: Icon(
+                            Icons.map_outlined,
+                            color: Color(0xFF627487),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      'Images',
+                      style: GoogleFonts.inter(
+                        color: Color(0xFF000B17),
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5.h,
+                    ),
+
+                    TextFormField(
+                      controller: image,
+
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.r)),
+                        hintText: 'upload images',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF627487),
+                          fontSize: 16.sp,
+                          fontFamily: 'sfprodisplay',
+                          fontWeight: FontWeight.w500,
+                        ),
+                        suffixIcon: GestureDetector(
+                          onTap: () {
+                            _addImages();
                           },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 28.h,
-                      ),
-                      Text(
-                        'Choose your brand',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF000B17),
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 34.h,
-                      ),
-                      Text(
-                        'Brand',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF000B17),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 9.h,
-                      ),
-                      Container(
-                        width: 350.w,
-                        height: 60.h,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1.w, color: Color(0xFF000B17)),
-                            borderRadius: BorderRadius.circular(3),
+                          child: Icon(
+                            Icons.add,
+                            color: Color(0xFF627487),
                           ),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 10.w),
-                                child: Text(
-                                  selectedBrand ?? "Select Vehicle Brand",
-                                  style: GoogleFonts.lato(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  showModalBottomSheet(
-                                    context: context,
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    builder: (BuildContext context) {
-                                      return StatefulBuilder(
-                                        builder: (BuildContext context,
-                                            void Function(void Function())
-                                                setState) {
-                                          return SizedBox(
-                                            height: 640.h,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 41.w),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(height: 44.h),
-                                                  Text(
-                                                    'Brands',
-                                                    style: GoogleFonts.inter(
-                                                      color: Color(0xFF000B17),
-                                                      fontSize: 20.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(height: 26.h),
-                                                  TextField(
-                                                    controller: brandController,
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                        borderSide: BorderSide(
-                                                            color: Color(
-                                                                0xFF000B17)),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                        borderSide: BorderSide(
-                                                            color: Color(
-                                                                0xFF000B17)),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.red),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      prefixIcon:
-                                                          Icon(Icons.search),
-                                                      hintText:
-                                                          'Search brand here',
-                                                      hintStyle:
-                                                          GoogleFonts.inter(
-                                                        color:
-                                                            Color(0xFF000B17),
-                                                        fontSize: 14.sp,
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: ListView.builder(
-                                                      itemCount:
-                                                          brandOption.length,
-                                                      itemBuilder:
-                                                          (BuildContext context,
-                                                              int index) {
-                                                        final option =
-                                                            brandOption[index];
-                                                        return RadioListTile<
-                                                            String>(
-                                                          value:
-                                                              option['value'],
-                                                          groupValue:
-                                                              selectedBrand,
-                                                          // Sync the groupValue with the updated selectedBrand
-                                                          onChanged: (value) {
-                                                            setState(() {
-                                                              selectedBrand =
-                                                                  value ?? '';
-                                                              brandController
-                                                                      .text =
-                                                                  selectedBrand;
-                                                            });
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop(); // Close the modal after selection
-                                                          },
-                                                          title: Text(
-                                                            option['value'],
-                                                            style: GoogleFonts
-                                                                .lato(
-                                                              fontSize: 18,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: Colors
-                                                                  .black87,
-                                                            ),
-                                                          ),
-                                                          secondary: Icon(
-                                                            option['icon'],
-                                                            color: Colors.black,
-                                                            size: 30,
-                                                          ),
-                                                          activeColor:
-                                                              Colors.black,
-                                                        );
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
-                              )
-                            ],
-                          ),
+                        prefix: Icon(
+                          Icons.image,
+                          color: Color(0xFF627487),
                         ),
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text(
-                        'Model',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF000B17),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 9.h,
-                      ),
-                      Container(
-                        width: 350.w,
-                        height: 60.h,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1.w, color: Color(0xFF000B17)),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 10.w),
-                                child: Text(
-                                  selectedmodel ?? "Select Vehicle Model",
-                                  style: GoogleFonts.lato(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+
+                    ...List.generate(
+                      photos.length,
+                          (index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0),
+                          child: Card(
+                            child: ListTile(
+                              title: Text(photos[index]),
+                              trailing: IconButton(
+                                icon: Icon(Icons.delete, color: Colors.red),
+                                onPressed: () {
                                   setState(() {
-                                    isDropdownExpanded = !isDropdownExpanded;
+                                    photos.removeAt(index);
                                   });
-
-                                  showModalBottomSheet(
-                                    context: context,
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    builder: (BuildContext context) {
-                                      return StatefulBuilder(
-                                        builder: (BuildContext context,
-                                            void Function(void Function())
-                                                setState) {
-                                          return SizedBox(
-                                            height: 640.h,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 41.w),
-                                              child: Column(
-                                                // mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 44.h,
-                                                  ),
-                                                  Text(
-                                                    'Model',
-                                                    style: GoogleFonts.inter(
-                                                      color: Color(0xFF000B17),
-                                                      fontSize: 20.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 26.h,
-                                                  ),
-                                                  TextField(
-                                                    controller: model,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        decorationThickness:
-                                                            0.sp),
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      enabledBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.r),
-                                                          borderSide: BorderSide(
-                                                              color: Color(
-                                                                  0xFF000B17))),
-                                                      focusedBorder: OutlineInputBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.r),
-                                                          borderSide: BorderSide(
-                                                              color: Color(
-                                                                  0xFF000B17))),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.red),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      prefixIcon:
-                                                          Icon(Icons.search),
-                                                      hintText: 'Search here',
-                                                      hintStyle:
-                                                          GoogleFonts.inter(
-                                                        textStyle: TextStyle(
-                                                          color:
-                                                              Color(0xFF000B17),
-                                                          fontSize: 14.sp,
-                                                          fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: ListView.builder(
-                                                        itemCount: 1,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          return Column(
-                                                            children:
-                                                                modelOption.map(
-                                                                    (option) {
-                                                              return RadioListTile<
-                                                                  String>(
-                                                                value: option[
-                                                                    'value'],
-                                                                groupValue:
-                                                                    selectedmodel,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(() {
-                                                                    selectedmodel =
-                                                                        value;
-                                                                    brandController
-                                                                            .text !=
-                                                                        value;
-
-                                                                    // Close dropdown on selection
-                                                                  });
-                                                                },
-                                                                title: Text(
-                                                                  option[
-                                                                      'value'],
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black87,
-                                                                  ),
-                                                                ),
-                                                                secondary: Icon(
-                                                                  option[
-                                                                      'icon'],
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 30,
-                                                                ),
-                                                                activeColor:
-                                                                    Colors
-                                                                        .black,
-                                                              );
-                                                            }).toList(),
-                                                          );
-                                                        }),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 29.h,
-                                                        left: 47.w,
-                                                        right: 36.w),
-                                                    child: Container(
-                                                      width: 347.w,
-                                                      height: 54.h,
-                                                      decoration:
-                                                          ShapeDecoration(
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          side: BorderSide(
-                                                              width: 1,
-                                                              color: Color(
-                                                                  0xFFB5B1B1)),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(5),
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          'Others',
-                                                          style:
-                                                              GoogleFonts.inter(
-                                                            color: Color(
-                                                                0xFFB5B1B1),
-                                                            fontSize: 14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: 27.h,
-                                                        bottom: 55.h,
-                                                        left: 47.w,
-                                                        right: 36.w),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: Container(
-                                                        width: 340.w,
-                                                        height: 56.h,
-                                                        decoration:
-                                                            ShapeDecoration(
-                                                          color:
-                                                              Color(0xFF000B17),
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8)),
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Select',
-                                                            style: GoogleFonts
-                                                                .inter(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 20.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  );
                                 },
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text(
-                        'Type',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF000B17),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 25.h,
-                      ),
-                      Container(
-                        width: 350.w,
-                        height: 60.h,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1.w, color: Color(0xFF000B17)),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 10.w),
-                                child: Text(
-                                  selectetype ?? "Select Vehicle type",
-                                  style: GoogleFonts.lato(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isDropdownExpanded = !isDropdownExpanded;
-                                  });
+                        );
+                      },
+                    ),
+                    SizedBox(height: 20.h),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 37.h),
+                      child: BlocListener<CreateRentBloc, CreateRentState>(
+                        listener: (context, state) {
+                          if (state is CreateRentBlocLoading) {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) => Center(
+                                  child: CircularProgressIndicator(),
+                                ));
+                            print("loading");
+                          }
+                          if (State is CreateRentBlocLoading) {
+                            Navigator.of(context).pop();
+                            Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(builder: (_) => Rentadmin()),
+                                    (route) => false);
+                          }
+                          if (state is CreateRentBlocError) {
+                            Navigator.of(context).pop();
 
-                                  showModalBottomSheet(
-                                    context: context,
-                                    elevation: 10,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    builder: (BuildContext context) {
-                                      return StatefulBuilder(
-                                        builder: (BuildContext context,
-                                            void Function(void Function())
-                                                setState) {
-                                          return SizedBox(
-                                            height: 640.h,
-                                            child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 41.w),
-                                              child: Column(
-                                                // mainAxisAlignment: MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 44.h,
-                                                  ),
-                                                  Text(
-                                                    'Type',
-                                                    style: GoogleFonts.inter(
-                                                      color: Color(0xFF000B17),
-                                                      fontSize: 20.sp,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 26.h,
-                                                  ),
-                                                  TextField(
-                                                    controller: type,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
-                                                        decorationThickness:
-                                                            0.sp),
-                                                    decoration: InputDecoration(
-                                                      contentPadding:
-                                                          EdgeInsets.symmetric(
-                                                              vertical: 10.h),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0xFF000B17),
-                                                        ),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Color(0xFF000B17),
-                                                        ),
-                                                      ),
-                                                      errorBorder:
-                                                          OutlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                            color: Colors.red),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.r),
-                                                      ),
-                                                      prefixIcon:
-                                                          Icon(Icons.search),
-                                                      hintText: 'Search here',
-                                                      hintStyle:
-                                                          GoogleFonts.inter(
-                                                        textStyle: TextStyle(
-                                                          color:
-                                                              Color(0xFF000B17),
-                                                          fontSize: 14.sp,
-                                                          fontFamily: 'Inter',
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 25.h,
-                                                  ),
-                                                  Expanded(
-                                                    child: ListView.builder(
-                                                        itemCount: 1,
-                                                        itemBuilder:
-                                                            (BuildContext
-                                                                    context,
-                                                                int index) {
-                                                          return Column(
-                                                            children: typeOption
-                                                                .map((option) {
-                                                              return RadioListTile<
-                                                                  String>(
-                                                                value: option[
-                                                                    'value'],
-                                                                groupValue:
-                                                                    selectetype,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(
-                                                                    () {
-                                                                      selectetype =
-                                                                          value;
-                                                                      type.text !=
-                                                                          value;
-
-                                                                      // Close dropdown on selection
-                                                                    },
-                                                                  );
-                                                                },
-                                                                title: Text(
-                                                                  option[
-                                                                      'value'],
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .lato(
-                                                                    fontSize:
-                                                                        18,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400,
-                                                                    color: Colors
-                                                                        .black87,
-                                                                  ),
-                                                                ),
-                                                                secondary: Icon(
-                                                                  option[
-                                                                      'icon'],
-                                                                  color: Colors
-                                                                      .black,
-                                                                  size: 30,
-                                                                ),
-                                                                activeColor:
-                                                                    Colors
-                                                                        .black,
-                                                              );
-                                                            }).toList(),
-                                                          );
-                                                        }),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 68.h,
-                                                  ),
-                                                  Container(
-                                                    width: 347.w,
-                                                    height: 54.h,
-                                                    decoration: ShapeDecoration(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        side: BorderSide(
-                                                            width: 1,
-                                                            color: Color(
-                                                                0xFFB5B1B1)),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        'Others',
-                                                        style:
-                                                            GoogleFonts.inter(
-                                                          color:
-                                                              Color(0xFFB5B1B1),
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            vertical: 54.h),
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                      child: Container(
-                                                        width: 347.w,
-                                                        height: 50.h,
-                                                        decoration:
-                                                            ShapeDecoration(
-                                                          color:
-                                                              Color(0xFF001B39),
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          5)),
-                                                        ),
-                                                        child: Center(
-                                                          child: Text(
-                                                            'Select',
-                                                            style: GoogleFonts
-                                                                .inter(
-                                                              color:
-                                                                  Colors.white,
-                                                              fontSize: 20.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
-                                  );
-                                },
-                                child: Icon(Icons.keyboard_arrow_down_outlined),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text(
-                        'Year',
-                        style: GoogleFonts.inter(
-                          color: Color(0xFF000B17),
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 9.h,
-                      ),
-                      Container(
-                        width: 350.w,
-                        height: 60.h,
-                        decoration: ShapeDecoration(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(
-                                width: 1.w, color: Color(0xFF000B17)),
-                            borderRadius: BorderRadius.circular(3),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(right: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              GestureDetector(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                        context: context,
-                                        elevation: 10,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                        builder: (BuildContext context) {
-                                          return StatefulBuilder(
-                                            builder: (BuildContext context,
-                                                void Function(void Function())
-                                                    setState) {
-                                              return SizedBox(
-                                                height: 640.h,
-                                                child: Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 41.w),
-                                                  child: Column(
-                                                    // mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: <Widget>[
-                                                      SizedBox(
-                                                        height: 44.h,
-                                                      ),
-                                                      Text(
-                                                        'Model Year',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          color: Colors.brown,
-                                                        ),
-                                                      ),
-                                                      Expanded(
-                                                        child: CupertinoPicker(
-                                                          itemExtent: 32,
-                                                          scrollController:
-                                                              FixedExtentScrollController(
-                                                            initialItem:
-                                                                3, // Adjust this to match the default year
-                                                          ),
-                                                          children: List<
-                                                                  Widget>.generate(
-                                                              25, (int index) {
-                                                            return Center(
-                                                              child: Text(
-                                                                (2000 + index)
-                                                                    .toString(),
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        20),
-                                                              ),
-                                                            );
-                                                          }),
-                                                          onSelectedItemChanged:
-                                                              (int value) {
-                                                            setState(() {
-                                                              selectedyear =
-                                                                  2000 + value;
-                                                            });
-                                                          },
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 26.h,
-                                                      ),
-                                                      Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 54.h),
-                                                        child: GestureDetector(
-                                                          onTap: () {
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
-                                                          },
-                                                          child: Container(
-                                                            width: 347.w,
-                                                            height: 50.h,
-                                                            decoration:
-                                                                ShapeDecoration(
-                                                              color: Color(
-                                                                  0xFF001B39),
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5)),
-                                                            ),
-                                                            child: Center(
-                                                              child: Text(
-                                                                'Select',
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .inter(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize:
-                                                                      20.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                                left: 10.w),
-                                                        child: Text(
-                                                          selectedyear
-                                                              .toString(),
-                                                          style:
-                                                              GoogleFonts.lato(
-                                                            fontSize: 18.sp,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        });
-                                  },
-                                  child:
-                                      Icon(Icons.keyboard_arrow_down_outlined)),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => Price()));
+                            print("error");
+                          }
                         },
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 37.h),
+                        child: GestureDetector(
+                          onTap: () {
+                            final isValid = formkey.currentState!.validate();
+                            if (isValid||photos.isNotEmpty) {
+                              BlocProvider.of<CreateRentBloc>(context)
+                                  .add(FetchCreateRent(
+                                brand: brand.text,
+                                model: model.text,
+                                rating: double.parse(rating.text),
+                                year: int.parse(year.text),
+                                description: description.text,
+                                mileage: int.parse(milege.text),
+                                rentprice: int.parse(rentprice.text),
+                                geartype: geartype.text,
+                                fueltype: fueltype.text,
+                                noOfSeats: int.parse(nuberofseat.text),
+                                numberofdoors: int.parse(nuberofdoors.text),
+                                ownername: ownername.text,
+                                ownerphoneNumber: ownerphonenumber.text,
+                                ownerplace: ownerplace.text,
+                                location: location.text,
+                                photo: photos,
+                                latitude: lat,
+                                longitude: long,
+                                vehicleColor: '',
+                              ));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => Rentadmin()));
+                            }
+                            formkey.currentState?.save();
+                          },
                           child: Container(
                             width: 340.w,
                             height: 56.h,
@@ -1213,14 +674,12 @@ class _RentState extends State<Rent> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
